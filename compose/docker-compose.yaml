@@ -1,0 +1,26 @@
+version: '3'
+services:
+  storage-app:
+    image: storage-app
+    build:
+      context: ./storage
+      dockerfile: Dockerfile
+    container_name: storage-app
+    ports:
+      - "4000:80"
+    environment:
+      - PORT=80
+      - STORAGE_ACCOUNT_NAME=your_storage_account_name
+      - STORAGE_ACCESS_KEY=your_storage_access_key
+  video-app:
+    image: new-video
+    build:
+      context: ./video
+      dockerfile: Dockerfile
+    container_name: video-app
+    ports:
+      - "4001:80"
+    environment:
+      - PORT=80
+      - VIDEO_STORAGE_HOST=storage-app
+      - VIDEO_STORAGE_PORT=80
