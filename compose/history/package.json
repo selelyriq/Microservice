@@ -1,0 +1,20 @@
+{
+    "name": "history",
+    "version": "1.0.0",
+    "description": "History microservice",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "start:dev": "nodemon --legacy-watch index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^5.1.0",
+        "mongodb": "^4.17.0"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.7"
+    }
+}

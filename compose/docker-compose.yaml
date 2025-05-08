@@ -1,5 +1,11 @@
 version: '3'
 services:
+  db:
+    image: mongo:4.2.8
+    container_name: db
+    ports:
+      - "4001:27017"
+    restart: always
   storage-app:
     image: storage-app
     build:
@@ -9,9 +15,9 @@ services:
     ports:
       - "4000:80"
     environment:
+      - STORAGE_ACCOUNT_NAME=${STORAGE_ACCOUNT_NAME}
+      - STORAGE_ACCESS_KEY=${STORAGE_ACCESS_KEY}
       - PORT=80
-      - STORAGE_ACCOUNT_NAME=your_storage_account_name
-      - STORAGE_ACCESS_KEY=your_storage_access_key
   video-app:
     image: new-video
     build:
@@ -19,8 +25,37 @@ services:
       dockerfile: Dockerfile
     container_name: video-app
     ports:
-      - "4001:80"
+      - "4002:80"
     environment:
+      - DBHOST=mongodb://db:27017
+      - DBNAME=videos
       - PORT=80
       - VIDEO_STORAGE_HOST=storage-app
       - VIDEO_STORAGE_PORT=80
+
+  history-app:
+    image: history-app
+    build:
+      context: ./history
+      dockerfile: Dockerfile-dev
+    container_name: history-app
+    volumes:
+      - ./history:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "4003:80"
+    environment:
+      - PORT=80
+      - NODE_ENV=development
+    restart: "no"
+
+  rabbit:
+    image: rabbitmq:3-management
+    container_name: rabbit
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    expose:
+      - "5672"
+      - "15672"
+    restart: always

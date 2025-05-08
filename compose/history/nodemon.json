@@ -1,0 +1,8 @@
+{
+  "verbose": true,
+  "ignore": ["node_modules/*"],
+  "watch": ["/usr/src/app"],
+  "ext": "js,json",
+  "delay": "1000",
+  "poll": true
+} 
