@@ -45,6 +45,7 @@ services:
     ports:
       - "4003:80"
     environment:
+      - RABBIT=amqp://guest:guest@rabbit:5672
       - PORT=80
       - NODE_ENV=development
     restart: "no"

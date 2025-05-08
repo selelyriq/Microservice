@@ -4,4 +4,4 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 ENV NODE_ENV=development
-CMD ["npx", "nodemon", "--legacy-watch", "--watch", "/usr/src/app", "index.js"]
+CMD ["npx", "nodemon", "--legacy-watch", "--watch", "/usr/src/app", "index.js", "--wait-port rabbit:5672"]

@@ -134,6 +134,12 @@ app.get('/video', (req, res) => {
     }
 });
 
+function sendViewedMessage(messageChannel, videoPath) {
+    const msg = { videoPath: videoPath };
+    const jsonMsg = JSON.stringify(msg);
+    messageChannel.publish("", "viewed", Buffer.from(jsonMsg));
+}
+
 function sendViewedMessage(videoPath) {
     const postOptions = {
         method: 'POST',
